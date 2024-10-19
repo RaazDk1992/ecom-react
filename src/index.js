@@ -5,11 +5,12 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import'font-awesome/css/font-awesome.css';
+import ProductManagement from './components/admin/ProductManagement';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <App />
+  <ProductManagement/>
   </React.StrictMode>
 );
 

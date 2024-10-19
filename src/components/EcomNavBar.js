@@ -1,4 +1,4 @@
-import { Button, Container, Nav, Navbar } from "react-bootstrap";
+import { Button, Container, Form, Nav, Navbar } from "react-bootstrap";
 import'./../assets/NavBar.css';
 import { useState } from "react";
 
@@ -15,6 +15,7 @@ export default function EcomNavBar() {
         setIsSearchBarExpanded(false);
     }
   return(
+   <>
     <Navbar expand="lg" className="e-com-navbar">
     <Container>
       <Navbar.Brand href="#">E-com</Navbar.Brand>
@@ -29,6 +30,7 @@ export default function EcomNavBar() {
       </Navbar.Collapse>
     </Container>
   </Navbar>
+   </>
   
   );
 }
