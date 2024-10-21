@@ -15,17 +15,17 @@ export default function Products(){
         <FetchData onDataChange={handleDataChanges} apiUrl="http://localhost:8080/api/public/products"/>
         {error && <div className="error_message">{error}</div>}
         {!error && data && data &&(
-            <ul>
+            <div className="product_items_wrapper" style={{margin:"5px"}}>
                 {data.map(item=>(
-                   <Card id="item.productId" style={{width:'20rem'}}>
+                   <Card key="item.productId" style={{width:'20rem'}}>
                         <Card.Img variant="top" src={item.imagePath}/>
-                        <Card.Body>
-                            <Card.Title></Card.Title>
-                            <Card.Text></Card.Text>
+                        <Card.Body className="product_card_body">
+                            <Card.Title className="product_card_title">{item.productName}</Card.Title>
+                            <Card.Text className="product_card_details"></Card.Text>
                         </Card.Body>
                    </Card>
                 ))}
-            </ul>
+            </div>
         )}
 
     </>);
