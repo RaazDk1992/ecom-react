@@ -32,8 +32,11 @@
 .e-com-navbar .nav-link:hover::after {
   width: 100%;
 }
+.e-com-navbar .nav-link.active-link::after {
+  width: 100%;
+}
 
-.e-com-navbar .nav-link:hover {
+.e-com-navbar .nav-link.active-link {
   color: var(--active-text-color-nav-bar);
   font-weight: bold;
 }

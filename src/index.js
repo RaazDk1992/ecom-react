@@ -10,7 +10,7 @@ import ProductManagement from './components/admin/ProductManagement';
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-  <ProductManagement/>
+    <App/>
   </React.StrictMode>
 );
 
