@@ -8,3 +8,18 @@
 .product_items_wrapper .product_card_details{
     color: red;
 }
+#add_to_cart_button{
+    position:absolute;
+    bottom: -5px;
+    width: 90%;
+    left: 50%;
+    opacity: 0.8;
+    transition:  0.3s ease-in-out;
+    transform: translateX(-50%);
+    visibility: hidden;
+
+}
+.product_items_wrapper .product_card:hover #add_to_cart_button{
+    visibility: visible;
+    bottom: 2px;
+}

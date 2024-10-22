@@ -2,6 +2,7 @@ import { useCallback, useState } from "react";
 import FetchData from "../provider/FetchData";
 import { Button, Card } from "react-bootstrap";
 import './../assets/styles/Products.css';
+import Ratings from "./Ratings";
 
 
 export default function Products(){
@@ -19,14 +20,15 @@ export default function Products(){
         {!error && data && data &&(
             <div className="product_items_wrapper" style={{margin:"5px"}}>
                 {data.map(item=>(
-                   <Card className="product_card" key="item.productId">
+                   <Card className="product_card" key={item.productId}>
                         <Card.Img className="product_card_image" variant="top" src={item.imagePath} />
                         <Card.Body className="product_card_body">
-                            <Card.Title className="product_card_title">{item.productName}</Card.Title>
+                            <Card.Title className="product_card_title">{item.productName}  <Ratings ratings={3.2} ratings_id={"ratings_"+item.productId}/></Card.Title>
                             <Card.Text className="product_card_details">
                            
                           </Card.Text>
-                          <Button>Add</Button>
+                         
+                          <Button id="add_to_cart_button" key={"btn_"+item.productId}>Add to Cart &nbsp; <i className="fa fa-cart-plus"></i> </Button>
                         </Card.Body>
                    </Card>
                 ))}
