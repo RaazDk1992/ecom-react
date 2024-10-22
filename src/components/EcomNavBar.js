@@ -13,7 +13,7 @@ export default function EcomNavBar() {
 
     const links = [
       {id:1,text:"Admin",href:"/admin"},
-      {id:2,text:"Products",href:"/products"}
+      {id:2,text:"Products",href:"/"}
     ];
     const handleMenuItemClick =(id)=>{
       setIsLinkActive(id);
