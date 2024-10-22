@@ -1,6 +1,8 @@
 import { useCallback, useState } from "react";
 import FetchData from "../provider/FetchData";
-import { Card } from "react-bootstrap";
+import { Button, Card } from "react-bootstrap";
+import './../assets/Products.css';
+
 
 export default function Products(){
     const[data,setData] = useState([]);
@@ -17,11 +19,14 @@ export default function Products(){
         {!error && data && data &&(
             <div className="product_items_wrapper" style={{margin:"5px"}}>
                 {data.map(item=>(
-                   <Card key="item.productId" style={{width:'20rem'}}>
-                        <Card.Img variant="top" src={item.imagePath}/>
+                   <Card className="product_card" key="item.productId">
+                        <Card.Img className="product_card_image" variant="top" src={item.imagePath} />
                         <Card.Body className="product_card_body">
                             <Card.Title className="product_card_title">{item.productName}</Card.Title>
-                            <Card.Text className="product_card_details"></Card.Text>
+                            <Card.Text className="product_card_details">
+                           
+                          </Card.Text>
+                          <Button>Add</Button>
                         </Card.Body>
                    </Card>
                 ))}

@@ -1,0 +1,10 @@
+.product_items_wrapper .product_card{
+    width: 15rem;
+}
+.product_items_wrapper .product_card_image{
+    width: 10rem;
+    height: 8rem;
+}
+.product_items_wrapper .product_card_details{
+    color: red;
+}
