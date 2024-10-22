@@ -4,6 +4,7 @@ import { Button, Card } from "react-bootstrap";
 import './../assets/styles/Products.css';
 import Ratings from "./Ratings";
 import RenderStars from "./Stars";
+import { useNavigate } from "react-router-dom";
 
 
 export default function Products(){
@@ -16,8 +17,10 @@ export default function Products(){
        
     },[]);
 
+    const navigate = useNavigate();
     const productCardClick =(productId)=>{
-        console.log({productId});
+      //  console.log({productId});
+      navigate('/product-details',{state:productId});
     }
     return(<>
         {/* <RenderStars totalRatings={5} handleRatings={null}/> */}
