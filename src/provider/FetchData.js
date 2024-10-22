@@ -29,7 +29,7 @@ const FetchData = ({ onDataChange, apiUrl, someOtherProp }) => {
                 <div className="spinner-border text-warning load-info"  role="status">
                     <span className="visually-hidden">Loading...</span>
                 </div>
-                <span style={{ color: "red", marginLeft: "5px" }} className='load-info'>Loading...</span>
+                <span style={{ color: "blue", marginLeft: "5px", marginTop:"50px" }} className='load-info'>Loading...</span>
             </div>
         );
     }

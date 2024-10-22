@@ -1,0 +1,10 @@
+.star {
+    color: lightgray; /* Default color for unfilled stars */
+    margin: 20px;
+    padding: 20px;
+  }
+  
+  .star.filled {
+    color: gold; /* Color for filled stars */
+  }
+  
