@@ -1,7 +1,7 @@
 import { Button, Container, Form, Nav, Navbar } from "react-bootstrap";
-import'./../assets/NavBar.css';
 import { useState } from "react";
 import { Link, Route, Router, Routes } from "react-router-dom";
+import './../assets/styles/NavBar.css';
 
 
 export default function EcomNavBar() {

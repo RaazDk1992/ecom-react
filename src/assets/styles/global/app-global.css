@@ -1,0 +1,6 @@
+:root{
+    --primary-color:#047aea;
+    --primary-color-rgba:rgba(4, 122, 234, 1);
+    --inactive-text-color-nav-bar: #e1e4e4;
+    --active-text-color-nav-bar: #ffffff;
+}

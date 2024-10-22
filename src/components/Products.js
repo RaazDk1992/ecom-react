@@ -1,7 +1,7 @@
 import { useCallback, useState } from "react";
 import FetchData from "../provider/FetchData";
 import { Button, Card } from "react-bootstrap";
-import './../assets/Products.css';
+import './../assets/styles/Products.css';
 
 
 export default function Products(){
