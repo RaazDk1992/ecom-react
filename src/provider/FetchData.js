@@ -23,7 +23,16 @@ const FetchData = ({ onDataChange, apiUrl, someOtherProp }) => {
         fetchData(); // Call the fetchData function
     }, [onDataChange, apiUrl]); // Include apiUrl in the dependency array
 
-    if (loading) return <div>Loading...</div>;
+    if (loading) {
+        return (
+            <div className="text-center">
+                <div className="spinner-border text-warning load-info"  role="status">
+                    <span className="visually-hidden">Loading...</span>
+                </div>
+                <span style={{ color: "red", marginLeft: "5px" }} className='load-info'>Loading...</span>
+            </div>
+        );
+    }
 
     return null; // Since the parent will handle the display of data and errors
 };

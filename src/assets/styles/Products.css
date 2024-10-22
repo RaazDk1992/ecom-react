@@ -23,3 +23,10 @@
     visibility: visible;
     bottom: 2px;
 }
+
+.load-info{
+    position: absolute;
+    left: 50%;
+    top:50%;
+    
+}
