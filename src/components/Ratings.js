@@ -12,7 +12,7 @@ export default function Ratings({ratings, ratings_id}){
     return(
         <span className="star-rating" style={{float:"right"}} key={ratings_id}>
         {Array.from({ length: 5 }, (_, index) => {
-          if (index < normalized_rating) {
+          if (index < Math.floor(normalized_rating)) {
              return <i key={index+"_rating"} className="fa fa-star small-icon"/>
           } else if (index < Math.ceil(normalized_rating)) {
              return  <i  key={index+"_rating"} className="fa fa-star-half-full small-icon "/>
