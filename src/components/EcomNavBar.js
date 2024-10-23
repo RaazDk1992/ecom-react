@@ -1,6 +1,6 @@
-import { Button, Container, Form, Nav, Navbar } from "react-bootstrap";
+import { Button, Container, Nav, Navbar } from "react-bootstrap";
 import { useRef, useState } from "react";
-import { Link, Route, Router, Routes } from "react-router-dom";
+import { Link } from "react-router-dom";
 import './../assets/styles/NavBar.css';
 import 'font-awesome/css/font-awesome.css';
 
