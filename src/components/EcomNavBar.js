@@ -2,7 +2,7 @@ import { Button, Container, Form, Nav, Navbar } from "react-bootstrap";
 import { useState } from "react";
 import { Link, Route, Router, Routes } from "react-router-dom";
 import './../assets/styles/NavBar.css';
-
+import 'font-awesome/css/font-awesome.css';
 
 export default function EcomNavBar() {
     /**
@@ -45,9 +45,11 @@ export default function EcomNavBar() {
             
 
         </Nav>
-        <div id="search-div" className="ms-auto">
-        <Button className="fa fa-search ecom-search-button fa-2x"  onClick={openSearchBar}></Button>
+        <div id="navbar-search-div" className="d-flex justify-content-end ms-auto">
+          <input type="text" name="navbar_search_field" id="navbar_search_field" placeholder="Search here"/>
+          <Button id="navbar_search_button"  onClick={openSearchBar}><i className="fa fa-search ecom-search-button fa-2x search-div-icons "/></Button>
         </div>
+       <div><i className="fa fa-shopping-cart  search-div-icons "/></div>
       </Navbar.Collapse>
     </Container>
     

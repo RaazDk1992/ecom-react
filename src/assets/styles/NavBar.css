@@ -30,16 +30,43 @@
 .e-com-navbar .nav-link.active-link::after {
   width: 100%;
 }
+#navbar-search-div{
+  width: 50%;
+}
 
 .e-com-navbar .nav-link.active-link {
   color: var(--active-text-color-nav-bar);
   font-weight: bold;
 }
+#navbar_search_field{
+width: 80%;
+height: 40px;
+border: none;
+border-bottom: 1px solid white;
+background-color: transparent;
+color: white;
 
-.e-com-navbar #search-div .ecom-search-button{
-    background-color: var(--primary-color);
-    border: none;
+}
+
+#navbar_search_field:focus{
  
+  border: none !important;
+  border-bottom: 1px solid white !important;
+  background-color: transparent;
+  color: white;
+  outline: none;
+}
+
+#navbar_search_button {
+  background-color: transparent;
+  border: none;
+}
+#cart-section i{
+color: white;
+}
+.search-div-icons{
+  color: white;
+  font-size: 25px !important;
 }
 
 #ecom-search-panel form .form-group #search_text_field:focus {
@@ -51,15 +78,15 @@
 #ecom-search-panel form .form-group #search_text_field{
     margin-top: 5px;
     margin-left: 5px;
-    width: 90%;
+    width: 50%;
     height: 25%;
 }
 input::-webkit-input-placeholder { /* Chrome, Safari, Opera */
-    color: var(--primary-color);
+    color: white;
   }
   
   input::-moz-placeholder { /* Firefox 19+ */
-    color: var(--primary-color);
+    color: white;
   }
   
   input:-ms-input-placeholder { /* IE 10+ */
@@ -71,5 +98,5 @@ input::-webkit-input-placeholder { /* Chrome, Safari, Opera */
   }
   
   input::placeholder { /* Modern browsers */
-    color: var(--primary-color);
+    color: white;
   }
