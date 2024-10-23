@@ -45,6 +45,8 @@ border: none;
 border-bottom: 1px solid white;
 background-color: transparent;
 color: white;
+width: 0px;
+visibility: hidden;
 
 }
 

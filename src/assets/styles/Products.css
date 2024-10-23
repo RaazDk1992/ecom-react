@@ -1,3 +1,4 @@
+@import'./global/app-global.css';
 .product_items_wrapper .product_card{
     width: 15rem;
 }

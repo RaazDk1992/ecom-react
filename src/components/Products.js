@@ -25,7 +25,11 @@ export default function Products(){
     return(<>
         {/* <RenderStars totalRatings={5} handleRatings={null}/> */}
         <FetchData onDataChange={handleDataChanges} apiUrl="http://localhost:8080/api/public/products"/>
-        {error && <div className="error_message">{error.message}</div>}
+        {error && <div className="error_message message">
+            <div class="alert alert-danger" role="alert">
+                     <span className="message_header"><i className="fa  fa-warning"/></span>&nbsp;<span>{error.message}</span>
+            </div>
+            </div>}
         {!error && data && data &&(
             <div className="product_items_wrapper" style={{margin:"5px"}}>
                 {data.map(item=>(

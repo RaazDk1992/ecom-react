@@ -4,3 +4,9 @@
     --inactive-text-color-nav-bar: #e1e4e4;
     --active-text-color-nav-bar: #ffffff;
 }
+.error_message{
+    
+    position:absolute;
+    top: 40%;
+    left: 40%;
+}
