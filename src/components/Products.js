@@ -13,7 +13,7 @@ export default function Products(){
     const handleDataChanges =useCallback((data,error)=>{
         setData(data);
         setError(error);
-        console.log(data);
+       // console.log(data);
        
     },[]);
 
