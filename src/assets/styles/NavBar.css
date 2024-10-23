@@ -38,8 +38,7 @@
   color: var(--active-text-color-nav-bar);
   font-weight: bold;
 }
-#navbar_search_field{
-width: 80%;
+.navbar_search_field{
 height: 40px;
 border: none;
 border-bottom: 1px solid white;
@@ -47,10 +46,20 @@ background-color: transparent;
 color: white;
 width: 0px;
 visibility: hidden;
-
+transition: width 0.5s ease-in-out;
 }
+.navbar_search_field.active{
+  width: 80%;
+  height: 40px;
+  border: none;
+  border-bottom: 1px solid white;
+  background-color: transparent;
+  color: white;
+  visibility: visible;
+  
+  }
 
-#navbar_search_field:focus{
+.navbar_search_field:focus{
  
   border: none !important;
   border-bottom: 1px solid white !important;

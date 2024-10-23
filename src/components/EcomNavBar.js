@@ -1,5 +1,5 @@
 import { Button, Container, Form, Nav, Navbar } from "react-bootstrap";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { Link, Route, Router, Routes } from "react-router-dom";
 import './../assets/styles/NavBar.css';
 import 'font-awesome/css/font-awesome.css';
@@ -10,6 +10,7 @@ export default function EcomNavBar() {
      */
     const[isSearchBarExpanded,setIsSearchBarExpanded] = useState(false);
     const[activeLink, setIsLinkActive] = useState(false);
+    const inputRef = useRef(null);
 
     const links = [
       {id:1,text:"Admin",href:"/admin"},
@@ -19,10 +20,15 @@ export default function EcomNavBar() {
       setIsLinkActive(id);
       
     }
-    const openSearchBar = () =>{
-        setIsSearchBarExpanded(true);
-        console.log(isSearchBarExpanded);
-    }
+    const openSearchBar = () => {
+      setIsSearchBarExpanded(true); // Open the search bar
+      setTimeout(() => {
+        // Use a small timeout to ensure the input is fully rendered before focusing
+        if (inputRef.current) {
+          inputRef.current.focus(); // Set focus to the input field
+        }
+      }, 100); 
+    };
     const closeSearchBar =() =>{
         setIsSearchBarExpanded(false);
     }
@@ -46,7 +52,9 @@ export default function EcomNavBar() {
 
         </Nav>
         <div id="navbar-search-div" className="d-flex justify-content-end ms-auto">
-          <input type="text" name="navbar_search_field" id="navbar_search_field" placeholder="Search here"/>
+          <input key={`navbar_search_field_key`} type="text" className={`navbar_search_field ${isSearchBarExpanded?'active':''}`} name="navbar_search_field"  placeholder="Search here"
+          ref={inputRef}
+          onBlur={closeSearchBar}/>
           <Button id="navbar_search_button"  onClick={openSearchBar}><i className="fa fa-search ecom-search-button fa-2x search-div-icons "/></Button>
         </div>
        <div><i className="fa fa-shopping-cart  search-div-icons "/></div>
