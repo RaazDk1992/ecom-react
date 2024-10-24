@@ -57,7 +57,7 @@ export default function EcomNavBar() {
           onBlur={closeSearchBar}/>
           <Button id="navbar_search_button"  onClick={openSearchBar}><i className="fa fa-search ecom-search-button fa-2x search-div-icons "/></Button>
         </div>
-       <div><i className="fa fa-shopping-cart  search-div-icons "/></div>
+       
       </Navbar.Collapse>
     </Container>
     

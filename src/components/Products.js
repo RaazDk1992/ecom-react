@@ -5,8 +5,8 @@ import './../assets/styles/Products.css';
 import Ratings from "./Ratings";
 import RenderStars from "./Stars";
 import {useNavigate } from "react-router-dom";
-import CartDropDown from "./CartDropDown";
 import { CartContext, CartDataProvider } from "../provider/CartDataProvider";
+import FloatingCart from "./FloatingCart";
 
 
 export default function Products(){
@@ -31,7 +31,7 @@ export default function Products(){
     }
     return(<>
         {/* <RenderStars totalRatings={5} handleRatings={null}/> */}
-        <CartDropDown/>
+       
         <FetchData onDataChange={handleDataChanges} apiUrl="http://localhost:8080/api/public/products"/>
         {error && <div className="error_message message">
             <div class="alert alert-danger" role="alert">

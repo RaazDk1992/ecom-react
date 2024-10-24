@@ -3,9 +3,10 @@ import { Route, Routes, BrowserRouter } from "react-router-dom";
 import ProductManagement from "../components/admin/ProductManagement";
 import Products from "../components/Products";
 import ProductDetails from "../components/ProductDetails";
-import CartDropDown from "../components/CartDropDown";
 import { CartDataProvider } from "../provider/CartDataProvider";
 import EcomNavBar from "../components/EcomNavBar";
+import Cart from "../components/Cart";
+import FloatingCart from "../components/FloatingCart";
 
 const AppRoutes =() =>{
     return(
@@ -18,7 +19,7 @@ const AppRoutes =() =>{
           path="/products"
           element={
             <CartDataProvider>
-              <Products />
+              <Products /> <FloatingCart/>
             </CartDataProvider>
           }
         />
@@ -26,7 +27,7 @@ const AppRoutes =() =>{
           path="/cart"
           element={
             <CartDataProvider>
-              <CartDropDown />
+              <Cart/>
             </CartDataProvider>
           }
         />

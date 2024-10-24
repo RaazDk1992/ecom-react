@@ -1,0 +1,19 @@
+@import './global/app-global.css';
+#floating-cart{
+    position:fixed;
+    top: 10%;
+    right: 2%;
+    width: 50px;
+    height: 50px;
+    border: 1px solid gray;
+    border-radius: 50%;
+    background-color: transparent;
+    display: flex;
+    justify-content: center;
+}
+.ecom-cart-icon{
+    background:transparent;
+    border: none;
+    color: gray;
+
+}
