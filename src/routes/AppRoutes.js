@@ -5,13 +5,15 @@ import Products from "../components/Products";
 import ProductDetails from "../components/ProductDetails";
 import CartDropDown from "../components/CartDropDown";
 import { CartDataProvider } from "../provider/CartDataProvider";
+import EcomNavBar from "../components/EcomNavBar";
 
 const AppRoutes =() =>{
     return(
         
            <BrowserRouter>
+           <EcomNavBar/>
             <Routes>
-                <Route path="/admin" element={ProductManagement}/>
+                <Route path="/admin" element={<ProductManagement/>}/>
                 <Route
           path="/products"
           element={
