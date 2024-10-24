@@ -31,6 +31,7 @@ export default function Products(){
     }
     return(<>
         {/* <RenderStars totalRatings={5} handleRatings={null}/> */}
+        <CartDropDown/>
         <FetchData onDataChange={handleDataChanges} apiUrl="http://localhost:8080/api/public/products"/>
         {error && <div className="error_message message">
             <div class="alert alert-danger" role="alert">
@@ -49,7 +50,8 @@ export default function Products(){
                           </Card.Text>
                          
                           <Button id="add_to_cart_button" key={"btn_"+item.productId}
-                         onClick={()=>addItemToCart(item)}>Add to Cart &nbsp; <i className="fa fa-cart-plus"></i> </Button>
+                         onClick={(e)=>{e.stopPropagation();
+                            addItemToCart(item);}}>Add to Cart &nbsp; <i className="fa fa-cart-plus"></i> </Button>
                         </Card.Body>
                    </Card>
                 ))}

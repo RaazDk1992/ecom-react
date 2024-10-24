@@ -1,11 +1,11 @@
 import { useOutletContext } from "react-router-dom";
+import { CartContext } from "../provider/CartDataProvider";
+import { useContext } from "react";
 
 export default function CartDropDown(){
 
-   
-    const context = useOutletContext(); // This should now contain the context passed from Products
-    console.log(context);
+    const {cartItems} = useContext(CartContext);
     return(
-        <p>Total Items in cart </p>
+        <p>Total Items in cart {cartItems.length} </p>
     );
 }
