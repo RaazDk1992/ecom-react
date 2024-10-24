@@ -4,13 +4,15 @@ import { Button, Card } from "react-bootstrap";
 import './../assets/styles/Products.css';
 import Ratings from "./Ratings";
 import RenderStars from "./Stars";
-import { useNavigate } from "react-router-dom";
+import {useNavigate } from "react-router-dom";
+import CartDropDown from "./CartDropDown";
+import { CartContext, CartDataProvider } from "../provider/CartDataProvider";
 
 
 export default function Products(){
     const[data,setData] = useState([]);
     const[error,setError] = useState(null);
-    
+    const { addToCart } = useContext(CartContext); // Access the addToCart function
 
     const handleDataChanges =useCallback((data,error)=>{
         setData(data);
@@ -19,6 +21,9 @@ export default function Products(){
        
     },[]);
 
+    const addItemToCart = (item)=>{
+        addToCart(item);
+    }
     const navigate = useNavigate();
     const productCardClick =(productId)=>{
       //  console.log({productId});
@@ -44,12 +49,11 @@ export default function Products(){
                           </Card.Text>
                          
                           <Button id="add_to_cart_button" key={"btn_"+item.productId}
-                         >Add to Cart &nbsp; <i className="fa fa-cart-plus"></i> </Button>
+                         onClick={()=>addItemToCart(item)}>Add to Cart &nbsp; <i className="fa fa-cart-plus"></i> </Button>
                         </Card.Body>
                    </Card>
                 ))}
             </div>
         )}
-
-    </>);
+   </>);
 }
