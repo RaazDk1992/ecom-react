@@ -5,13 +5,12 @@ import './../assets/styles/Products.css';
 import Ratings from "./Ratings";
 import RenderStars from "./Stars";
 import { useNavigate } from "react-router-dom";
-import { CartContext } from "../provider/CartContextProvider";
 
 
 export default function Products(){
     const[data,setData] = useState([]);
     const[error,setError] = useState(null);
-    const{addToCart} = useContext(CartContext);
+    
 
     const handleDataChanges =useCallback((data,error)=>{
         setData(data);
@@ -45,7 +44,7 @@ export default function Products(){
                           </Card.Text>
                          
                           <Button id="add_to_cart_button" key={"btn_"+item.productId}
-                          onClick={()=>{addToCart(item)}}>Add to Cart &nbsp; <i className="fa fa-cart-plus"></i> </Button>
+                         >Add to Cart &nbsp; <i className="fa fa-cart-plus"></i> </Button>
                         </Card.Body>
                    </Card>
                 ))}
