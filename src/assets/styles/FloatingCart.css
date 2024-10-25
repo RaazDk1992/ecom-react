@@ -1,19 +1,24 @@
-@import './global/app-global.css';
-#floating-cart{
-    position:fixed;
-    top: 10%;
-    right: 2%;
-    width: 50px;
-    height: 50px;
-    border: 1px solid gray;
-    border-radius: 50%;
-    background-color: transparent;
+#floating-cart {
     display: flex;
-    justify-content: center;
+    flex-direction: column;  /* Stack cart icon and button vertically */
+    justify-content: center; /* Center vertically */
+    align-items: center;     /* Center horizontally */
+    width: 100px;            /* Adjust size based on your needs */
+    height: 100px;
+    position: fixed;
+    right: 2%;
+    top: 5%;
 }
-.ecom-cart-icon{
-    background:transparent;
-    border: none;
-    color: gray;
 
+.ecom-cart-icon {
+    background-color: transparent;
+    border: none;
+    color: inherit;
+    cursor: pointer;
+    font-size: 2em;
 }
+
+.dropdown-toggle::after {
+    display: none !important;
+}
+
