@@ -27,14 +27,19 @@
 .ecom-card-face-back{
     transform: rotateY(180deg);
 }
-#card-chip{
+#card-chip img{
     position: absolute;
     left:5%;
     top: 5%;
-    width: 50px;
-    height: 40px;
+    width: 45px;
+    height: 38px;
     border-radius: 2px;
-    background-color:#d1cfc9;
+}
+
+#expiry-date{
+    position: absolute;
+    top:60%;
+    left: 80%;
 }
 
 #card-logo{

@@ -17,6 +17,8 @@ export default function ProductManagement() {
         categoryId:1
     });
 
+    
+
     // Function to handle input changes and update the product state
     function buildBody(event) {
         const { name, value } = event.target;
