@@ -7,8 +7,13 @@ import { CartDataProvider } from "../provider/CartDataProvider";
 import EcomNavBar from "../components/EcomNavBar";
 import Cart from "../components/Cart";
 import FloatingCart from "../components/FloatingCart";
+import CheckOut from "../components/Checkout";
+import { Elements } from "@stripe/react-stripe-js";
+import { loadStripe } from "@stripe/stripe-js";
 
 const AppRoutes =() =>{
+  const stripePromise = loadStripe(process.env.REACT_APP_STRIPE_PUBLIC_KEY);
+  console.log(stripePromise);
     return(
         
            <BrowserRouter>
@@ -31,7 +36,14 @@ const AppRoutes =() =>{
             </CartDataProvider>
           }
         />
-                <Route path="/product-details" element={ProductDetails}/>
+        <Route path="/product-details" element={ProductDetails}/>
+        <Route path="/checkout" element={
+        <Elements stripe={stripePromise}>
+          <CartDataProvider>
+          <CheckOut/>
+          </CartDataProvider>
+        </Elements>
+        }/>
             </Routes>
            </BrowserRouter>
         
