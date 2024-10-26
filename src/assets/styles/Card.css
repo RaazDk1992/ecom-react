@@ -38,8 +38,9 @@
 
 #expiry-date{
     position: absolute;
-    top:60%;
+    top:55%;
     left: 80%;
+    color: rgb(145, 145, 145);
 }
 
 #card-logo{
@@ -51,13 +52,16 @@
     background-color: white;
 }
 
-#cardholders-name{
+#card-number{
     position: absolute;
     left: 10%;
     top: 40%;
     width: 80%;
     height: 30px;
-    background-color: white;
+    display: flex;
+    align-content: center;
+    padding-left: 10%;
+    color: rgb(145, 145, 145);
 }
 
 #card-form{
