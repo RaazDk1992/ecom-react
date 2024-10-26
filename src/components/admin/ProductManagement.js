@@ -63,9 +63,7 @@ export default function ProductManagement() {
             formData.append('imageFile',product.imageFile);
         }
 
-        for (let pair of formData.entries()) {
-            console.log(`${pair[0]}: ${pair[1]}`);
-        }
+       
         axios.post('http://localhost:8080/api/admin/addproduct', formData, {
             headers: {
                 'Content-Type': 'multipart/form-data',
