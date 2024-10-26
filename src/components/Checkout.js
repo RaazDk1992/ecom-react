@@ -2,7 +2,8 @@ import { CardElement, useElements, useStripe } from "@stripe/react-stripe-js";
 import { useContext, useState } from "react";
 import { Card, Container,Row,Col, Form, Button } from "react-bootstrap";
 import'./../assets/styles/Card.css';
-import chipLogo from './../assets/assets/global/logo/c-chip.png';
+import chipLogo from './../assets/logo/c-chip.png';
+import visaLogo from './../assets/logo/visa.PNG';
 
 const Checkout = () => {
   const[cardDetails,setCardDetails] =useState({
@@ -15,11 +16,41 @@ const Checkout = () => {
     amount:200
   });
 
+  const[card,setCardType] = useState('undefined');
+
 
   const makePayment =(e)=>{
     e.preventDefault();
     console.log(cardDetails.card_number);
 
+  }
+
+  function   delimitedCardNo(event){
+
+    const cleanedVal = event.target.value.replace(/\D/g,'');;
+    
+    const formattedCardNo = cleanedVal.match(/.{1,4}/g)?.join('-') || ''; // Group into sets of 4
+
+    event.target.value=formattedCardNo;
+    setCardType(cardType(cleanedVal));
+    setFields(event);
+
+  }
+
+  function cardType(cardNo){
+    const patterns={
+      Visa:/^4[0-9]{0,15}$/,
+      MasterCard: /^5[1-5][0-9]{0,14}$/,
+      AmericanExpress: /^3[47][0-9]{0,13}$/,
+      Discover: /^6(?:011|5[0-9]{2})[0-9]{0,12}$/
+
+    };
+    for(const[cardType,pattern] of Object.entries(patterns)){
+      if(pattern.test(cardNo)){
+        return cardType;
+      }
+    }
+    return "Undefined";
   }
   const setFields =(e)=>{
 
@@ -46,7 +77,7 @@ const Checkout = () => {
                 name="card_number"
                 placeholder="XXXX-XXXX-XXXX-XXXX"
                 className="mb-3 cardinput"
-                onChange={setFields}
+                onChange={delimitedCardNo}
               />
               
             </Form.Group>
@@ -83,7 +114,9 @@ const Checkout = () => {
           <div className="ecom-card">
             <div className="ecom-card-face ecom-card-face-front p-3">
               <div id="card-chip"><img src={chipLogo} alt="Chip" className="chip-image" /></div>
-              <div id="card-logo"></div>
+              <div id="card-logo">
+               {card.toLocaleLowerCase() === 'visa' && <img src={visaLogo}></img>}
+              </div>
               <div id="card-number">XXXX-XXXX-XXXX-XXXX</div>
               <div id="expiry-date">MM/YY</div>
             </div>
