@@ -4,8 +4,10 @@ import { Card, Container,Row,Col, Form, Button } from "react-bootstrap";
 import'./../assets/styles/Card.css';
 import chipLogo from './../assets/logo/c-chip.png';
 import visaLogo from './../assets/logo/visa.PNG';
+import { CartContext, CartDataProvider } from "../provider/CartDataProvider";
 
 const Checkout = () => {
+  /** checkout form states */
   const[cardDetails,setCardDetails] =useState({
     card_number:null,
     card_holder_name:null,
@@ -16,12 +18,34 @@ const Checkout = () => {
     amount:200
   });
 
+
+  /** state needed to detect card type */
+  const {cartItems} = useContext(CartContext);    
+
+  console.log(cartItems);
+
   const[card,setCardType] = useState('undefined');
+  const[loading, setLoading] = useState(false);
+  /** initializing stripe card promises */
+  const stripe = useStripe();
+  const elements = useElements();
 
-
-  const makePayment =(e)=>{
+  const makePayment = async(e)=>{
     e.preventDefault();
-    console.log(cardDetails.card_number);
+    if(!stripe) return;
+
+    setLoading(true);
+    const PaymentMethod = await stripe.createPaymentMethod({
+      type:"card",
+      card:{
+        number:cardDetails.card_number,
+        exp_month:9,
+        exp_year:2025,
+        cvc:cardDetails.card_cvc
+
+      }
+    });
+
 
   }
 

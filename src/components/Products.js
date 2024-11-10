@@ -5,14 +5,13 @@ import './../assets/styles/Products.css';
 import Ratings from "./Ratings";
 import RenderStars from "./Stars";
 import {useNavigate } from "react-router-dom";
-import { CartContext, CartDataProvider } from "../provider/CartDataProvider";
-import FloatingCart from "./FloatingCart";
+import { CartContext } from "../provider/CartDataProvider";
 
 
 export default function Products(){
     const[data,setData] = useState([]);
     const[error,setError] = useState(null);
-    const { addToCart } = useContext(CartContext); // Access the addToCart function
+    const { addToCart , cartItems} = useContext(CartContext); // Access the addToCart function
 
     const handleDataChanges =useCallback((data,error)=>{
         setData(data);
@@ -23,6 +22,7 @@ export default function Products(){
 
     const addItemToCart = (item)=>{
         addToCart(item);
+        console.log(cartItems);
     }
     const navigate = useNavigate();
     const productCardClick =(productId)=>{
@@ -31,7 +31,6 @@ export default function Products(){
     }
     return(<>
         {/* <RenderStars totalRatings={5} handleRatings={null}/> */}
-       
         <FetchData onDataChange={handleDataChanges} apiUrl="http://localhost:8080/api/public/products"/>
         {error && <div className="error_message message">
             <div class="alert alert-danger" role="alert">

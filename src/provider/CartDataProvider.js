@@ -1,4 +1,4 @@
-import { createContext, useState, useContext } from "react";
+import { createContext, useState } from "react";
 
 // Create the CartContext
 export const CartContext = createContext();
@@ -9,7 +9,11 @@ export const CartDataProvider = ({ children }) => {
 
   // Function to add items to the cart
   const addToCart = (product) => {
-    setCartItems((prevItems) => [...prevItems, product]);
+    setCartItems((prevItems) => {
+      const updatedCart = [...prevItems, product];
+      console.log("Updated Cart Items:", updatedCart); // Logs the correct updated cart
+      return updatedCart;
+    });
   };
 
   // Return the context provider with cartItems and addToCart available

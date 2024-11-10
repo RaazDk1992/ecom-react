@@ -5,7 +5,6 @@ import './../assets/styles/FloatingCart.css';
 import { CartContext } from "../provider/CartDataProvider";
 
 export default function FloatingCart() {
-    const [cartexpanded, setCartExpanded] = useState(false);
     const {cartItems} = useContext(CartContext);    
     return (
         <div id="floating-cart">

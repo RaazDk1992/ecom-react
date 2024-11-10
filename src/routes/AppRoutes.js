@@ -13,7 +13,6 @@ import { loadStripe } from "@stripe/stripe-js";
 
 const AppRoutes =() =>{
   const stripePromise = loadStripe(process.env.REACT_APP_STRIPE_PUBLIC_KEY);
-  console.log(stripePromise);
     return(
         
            <BrowserRouter>
@@ -36,13 +35,16 @@ const AppRoutes =() =>{
             </CartDataProvider>
           }
         />
-        <Route path="/product-details" element={ProductDetails}/>
+        <Route path="/product-details" element={<ProductDetails/>}/>
         <Route path="/checkout" element={
-        <Elements stripe={stripePromise}>
-          <CartDataProvider>
-          <CheckOut/>
-          </CartDataProvider>
-        </Elements>
+        <CartDataProvider>
+            <Elements stripe={stripePromise}>
+        
+            <CheckOut/>
+       
+           </Elements>
+
+        </CartDataProvider>
         }/>
             </Routes>
            </BrowserRouter>
