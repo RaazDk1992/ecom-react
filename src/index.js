@@ -5,10 +5,13 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import'font-awesome/css/font-awesome.css';
+import { ContextProvider } from './provider/ContextApi';
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <App/>
+      <ContextProvider>
+        <App/>
+      </ContextProvider>
   </React.StrictMode>
 );
 

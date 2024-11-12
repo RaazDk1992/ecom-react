@@ -1,12 +1,10 @@
 import React from "react";
 import { Navigate } from "react-router-dom";
-import { GlobalContext } from "../provider/ContextApi";
+import { useEcomContext } from "../provider/ContextApi";
 
-
-
-const ProtectedRoute = ({ children, adminPage }) => {
+const ProtectedRoutes = ({ children, adminPage }) => {
   // Access the token and isAdmin state by using the useMyContext hook from the ContextProvider
-  const { token, isAdmin } = GlobalContext();
+  const { token, isAdmin } = useEcomContext();
 
   //navigate to login page to an unauthenticated
   if (!token) {
@@ -21,6 +19,5 @@ const ProtectedRoute = ({ children, adminPage }) => {
   return children;
 };
 
-export default ProtectedRoute;
-
+export default ProtectedRoutes;
 
