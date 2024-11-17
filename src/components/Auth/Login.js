@@ -1,7 +1,8 @@
 import React from 'react';
 import { useForm } from 'react-hook-form';
 import InputField from'./../utils/InputField';
-import { Card } from 'react-bootstrap';
+import { Button, Card } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
 
 const Login = () => {
   const {
@@ -32,7 +33,7 @@ const Login = () => {
         id="username"
         register={register}
         errors={errors}
-        required = "*Username needed"
+        required = "*Username required!"
       />
       <InputField
         label="Password"
@@ -41,8 +42,17 @@ const Login = () => {
         errors={errors}
         required="*Password is required"
       />
-      <button type="submit">Submit</button>
+      <Button variant="primary" type="submit" className="btn btn-primary d-block mx-auto">Submit</Button>
     </form>
+    <p className="text-center text-sm text-slate-700 mt-6">
+              Don't have an account?{" "}
+              <Link
+                className="font-semibold underline hover:text-black"
+                to="/signup"
+              >
+                SignUp
+              </Link>
+            </p>
       </Card.Body>
    </Card>
 

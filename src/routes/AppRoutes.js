@@ -14,6 +14,7 @@ import { loadStripe } from "@stripe/stripe-js";
 import Login from "../components/Auth/Login";
 import AccessDenied from "../components/AccessDenied";
 import ProtectedRoute from "./ProtectedRoutes";
+import Register from "../components/Auth/Register";
 const AppRoutes =() =>{
   const stripePromise = loadStripe(process.env.REACT_APP_STRIPE_PUBLIC_KEY);
     return(
@@ -23,6 +24,7 @@ const AppRoutes =() =>{
 
             <Routes>
                 <Route path="/login" element={<Login/>}/>
+                <Route path="/signup" element={<Register/>}/>
                 <Route path="/admin" element={<ProtectedRoute adminPage={true}><ProductManagement/></ProtectedRoute>}/>
                 <Route
           path="/products"

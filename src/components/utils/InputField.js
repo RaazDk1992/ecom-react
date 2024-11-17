@@ -4,7 +4,7 @@ import { Form, Button, Row, Col } from 'react-bootstrap';
 
 const InputField = ({ label, id, register, errors, required }) => {
   return (
-    <Form.Group  controlId={id}>
+    <Form.Group  controlId={id} className='mb-2'>
       <Form.Label >
         {label}
       </Form.Label>
