@@ -29,6 +29,7 @@ const Login = () => {
       <Card.Body>
       <form onSubmit={handleSubmit(onSubmit)}>
       <InputField
+        type="text"
         label="Username"
         id="username"
         register={register}
@@ -37,6 +38,7 @@ const Login = () => {
       />
       <InputField
         label="Password"
+        type="password"
         id="password"
         register={register}
         errors={errors}

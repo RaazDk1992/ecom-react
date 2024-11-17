@@ -2,7 +2,7 @@ import React from 'react';
 import { useForm } from 'react-hook-form';
 import { Form, Button, Row, Col } from 'react-bootstrap';
 
-const InputField = ({ label, id, register, errors, required }) => {
+const InputField = ({ type,label, id, register, errors, required }) => {
   return (
     <Form.Group  controlId={id} className='mb-2'>
       <Form.Label >
@@ -10,7 +10,7 @@ const InputField = ({ label, id, register, errors, required }) => {
       </Form.Label>
       <Col >
         <Form.Control
-          type="text"
+          type={type}
           isInvalid={!!errors[id]} // Set the red border if there's an error
           {...register(id, { required: required })}
         />
