@@ -1,15 +1,27 @@
 import { Button, Card, Form } from "react-bootstrap";
 import { useForm } from "react-hook-form";
 import InputField from "../utils/InputField";
+import { useState } from "react";
+import { useEcomContext } from "../../provider/ContextApi";
 
 const Register = () =>{
 
+    const[role,setRoles] = useState();
+    const[loading,setLoading] = useState(false);
+    const{token} = useEcomContext();
     const{
         register,
         handleSubmit,
         formState:{errors}
     } = useForm({
-        defaultValues:{},
+        defaultValues:{
+            reg_first_name:"",
+            reg_last_name:"",
+            reg_email:"",
+            reg_username:"",
+            reg_password:"",
+            role:[role]
+        },
         mode:'onTouched'
     });
 

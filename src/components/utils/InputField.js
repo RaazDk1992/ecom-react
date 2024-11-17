@@ -1,6 +1,5 @@
 import React from 'react';
-import { useForm } from 'react-hook-form';
-import { Form, Button, Row, Col } from 'react-bootstrap';
+import { Form, Col } from 'react-bootstrap';
 
 const InputField = ({ type,label, id, register, errors, required }) => {
   return (
