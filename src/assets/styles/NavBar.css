@@ -34,6 +34,22 @@
   width: 50%;
 }
 
+#_avtar_div #avtar_icon{
+  background: none;
+  border:none;
+  font-size: 25px !important;
+  color: white;
+  
+}
+#_avtar_div a{
+  color: white;
+  text-decoration: none;
+  margin: 2;
+}
+
+#_avtar_div .user_actions{
+  
+}
 .e-com-navbar .nav-link.active-link {
   color: var(--active-text-color-nav-bar);
   font-weight: bold;

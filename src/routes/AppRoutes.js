@@ -11,7 +11,7 @@ import FloatingCart from "../components/FloatingCart";
 import CheckOut from "../components/Checkout";
 import { Elements } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
-import Login from "../components/Login";
+import Login from "../components/Auth/Login";
 import AccessDenied from "../components/AccessDenied";
 import ProtectedRoute from "./ProtectedRoutes";
 const AppRoutes =() =>{
@@ -20,7 +20,9 @@ const AppRoutes =() =>{
         
            <BrowserRouter>
            <EcomNavBar/>
+
             <Routes>
+                <Route path="/login" element={<Login/>}/>
                 <Route path="/admin" element={<ProtectedRoute adminPage={true}><ProductManagement/></ProtectedRoute>}/>
                 <Route
           path="/products"
