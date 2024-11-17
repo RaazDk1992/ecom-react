@@ -1,12 +1,14 @@
 import { Button, Card, Form } from "react-bootstrap";
 import { useForm } from "react-hook-form";
 import InputField from "../utils/InputField";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useEcomContext } from "../../provider/ContextApi";
+import api from "../../provider/api";
 
 const Register = () =>{
 
-    const[role,setRoles] = useState();
+    const signupEndpoint = process.env.REACT_APP_API_ENDPOINT;
+    const[role,setRole] = useState();
     const[loading,setLoading] = useState(false);
     const{token} = useEcomContext();
     const{
@@ -20,13 +22,47 @@ const Register = () =>{
             reg_email:"",
             reg_username:"",
             reg_password:"",
-            role:[role]
+           
         },
         mode:'onTouched'
     });
 
+    useEffect(() => {
+        setRole("ROLE_USER");
+      }, []);
 
-    const onSubmit = (data)=>{
+
+    const onSubmit = async (data)=>{
+
+            const  {
+            reg_first_name,
+            reg_last_name,
+            reg_email,
+            reg_username,
+            reg_password,
+            } = data;
+
+            const signupData = {
+                reg_first_name,
+                reg_last_name,
+                reg_email,
+                reg_username,
+                reg_password,
+                role:[role],
+            };
+
+            try{
+                console.log(data);
+                setLoading(true);
+            
+                const response =  await api.post("/auth/signup",signupData);
+                
+            }catch(ex){
+                    console.log(ex);
+            }
+
+
+
 
     }
 

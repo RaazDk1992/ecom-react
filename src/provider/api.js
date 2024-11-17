@@ -17,7 +17,7 @@ api.interceptors.request.use(
         }
 
         let csrfToken = localStorage.getItem("CSRF_TOKEN");
-
+       
         if (!csrfToken) {
             try {
                 const response = await axios.get(
