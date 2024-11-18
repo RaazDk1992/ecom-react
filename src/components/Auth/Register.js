@@ -35,24 +35,24 @@ const Register = () =>{
     const onSubmit = async (data)=>{
 
             const  {
-            reg_first_name,
-            reg_last_name,
-            reg_email,
-            reg_username,
-            reg_password,
-            } = data;
+            firstName,
+            lastName,
+            email,
+            userName,
+            password,
+            } =data;
 
             const signupData = {
-                reg_first_name,
-                reg_last_name,
-                reg_email,
-                reg_username,
-                reg_password,
+                firstName,
+                lastName,
+                email,
+                userName,
+                password,
                 role:[role],
             };
 
             try{
-                console.log(data);
+                console.log(signupData);
                 setLoading(true);
             
                 const response =  await api.post("/auth/signup",signupData);
@@ -77,35 +77,35 @@ const Register = () =>{
                     <Form onSubmit={handleSubmit(onSubmit)}>
                     <InputField label="First Name"
                      type="text"
-                     id="reg_first_name" 
+                     id="firstName" 
                      required="First Name required"
                      register={register}
                      errors={errors}/>
 
                      <InputField label="Last Name"
                      type="text"
-                     id="reg_last_name"
+                     id="lastName"
                      required="Last Name is required"
                      register={register}
                      errors={errors}
                      />
                      <InputField label="E-mail"
                      type="text"
-                     id="reg_email"
+                     id="email"
                      required="email is required"
                      register={register}
                      errors={errors}
                      />
                      <InputField label="UserName"
                      type="text"
-                     id="reg_username"
+                     id="userName"
                      required="username is required"
                      register={register}
                      errors={errors}
                      />
                      <InputField label="Password"
                      type="password"
-                     id="reg_password"
+                     id="password"
                      required="This field is required"
                      register={register}
                      errors={errors} />
