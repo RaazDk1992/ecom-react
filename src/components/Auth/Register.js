@@ -7,13 +7,13 @@ import api from "../../provider/api";
 
 const Register = () =>{
 
-    const signupEndpoint = process.env.REACT_APP_API_ENDPOINT;
     const[role,setRole] = useState();
     const[loading,setLoading] = useState(false);
     const{token} = useEcomContext();
     const{
         register,
         handleSubmit,
+        setError,
         formState:{errors}
     } = useForm({
         defaultValues:{
@@ -58,7 +58,18 @@ const Register = () =>{
                 const response =  await api.post("/auth/signup",signupData);
                 
             }catch(ex){
-                    console.log(ex);
+               // console.log(ex?.response?.data?.message)
+                if (
+                    ex?.response?.data?.message === "Username already in use."
+                  ) {
+                    setError("userName", { message: "username is already taken" });
+                  } else if (
+                    ex?.response?.data?.message === "Email already in use."
+                  ) {
+                    setError("email", { message: "Email is already in use" });
+                  }
+            } finally{
+                setLoading(false);
             }
 
 
@@ -74,6 +85,7 @@ const Register = () =>{
 
                 <Card.Header as="h4">Register</Card.Header>
                 <Card.Body>
+                    
                     <Form onSubmit={handleSubmit(onSubmit)}>
                     <InputField label="First Name"
                      type="text"
