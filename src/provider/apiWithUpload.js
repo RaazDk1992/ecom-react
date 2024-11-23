@@ -1,15 +1,15 @@
 import axios from "axios";
 
-const api = axios.create({
+const apiWithUpload = axios.create({
     baseURL: `${process.env.REACT_APP_API_ENDPOINT}`,
     headers: {
-        "Content-Type": "application/json",
+        "Content-Type": "multipart/form-data",
         Accept: "application/json",
     },
     withCredentials: true,
 });
 
-api.interceptors.request.use(
+apiWithUpload.interceptors.request.use(
     async (config) => {
         const jwtToken = localStorage.getItem("JWT_TOKEN");
         
@@ -47,4 +47,4 @@ api.interceptors.request.use(
     }
 );
 
-export default api;
+export default apiWithUpload;

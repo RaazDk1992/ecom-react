@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import InputField from'./../utils/InputField';
 import { Button, Card } from 'react-bootstrap';
-import { Link, useNavigate } from 'react-router-dom';
+import { json, Link, useNavigate } from 'react-router-dom';
 import { FcGoogle, FcSearch } from 'react-icons/fc';
 import { FaFacebook } from 'react-icons/fa';
 import { useEcomContext } from '../../provider/ContextApi';
@@ -22,13 +22,18 @@ const onLoginHandler = async(data)=>{
 
   try{
     setLoading(true);
-    const response  = await api.post("/auth/login",data);
+    const response  = await api.post("/api/auth/login",data);
     console.log(response);
     if(response.status === 200 && response.data.jwtToken){
 
+      
       const decoded = jwtDecode(response.data.jwtToken);
-      console.log(decoded);
-      setJwtToken(response.data.jwtToken);
+      localStorage.setItem("JWT_TOKEN",response.data.jwtToken.trim());
+      const user ={ "username": decoded.sub};
+      localStorage.setItem("USER",JSON.stringify(user));
+      console.log(localStorage.getItem("USER"));
+      setToken(response.data.jwtToken);
+      setLoading(false);
       
     }
 
@@ -44,7 +49,7 @@ const onLoginHandler = async(data)=>{
     formState: { errors },
   } = useForm({
     defaultValues: {
-      userName: '',
+      username: '',
       password: '',
     },
     mode: 'onTouched', // Triggers validation on focus out
@@ -61,7 +66,7 @@ const onLoginHandler = async(data)=>{
       <InputField
         type="text"
         label="Username"
-        id="userName"
+        id="username"
         register={register}
         errors={errors}
         required = "*Username required!"

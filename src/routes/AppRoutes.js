@@ -15,6 +15,8 @@ import Login from "../components/Auth/Login";
 import AccessDenied from "../components/AccessDenied";
 import ProtectedRoute from "./ProtectedRoutes";
 import Register from "../components/Auth/Register";
+import OAuth2Handler from "../components/Auth/OAuth2Handler";
+import NewSlide from "../components/NewSlide";
 const AppRoutes =() =>{
   const stripePromise = loadStripe(process.env.REACT_APP_STRIPE_PUBLIC_KEY);
     return(
@@ -43,6 +45,8 @@ const AppRoutes =() =>{
           }
         />
         <Route path="/product-details" element={<ProductDetails/>}/>
+        <Route path="/newslide" element={<NewSlide/>}/>
+        <Route path="/oauth2/redirect" element={<OAuth2Handler/>}/>
         <Route path="/checkout" element={
         <CartDataProvider>
             <Elements stripe={stripePromise}>

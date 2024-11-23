@@ -27,10 +27,13 @@ export const ContextProvider = ({ children }) => {
 
   const fetchUser = async () => {
     const user = JSON.parse(localStorage.getItem("USER"));
+   
 
     if (user?.username) {
+      console.log("Current user"+user.username);
       try {
-        const { data } = await api.get(`/auth/user`);
+        const { data } = await api.get(`/api/user/getuser`);
+        console.log(data);
         const roles = data.roles;
 
         if (roles.includes("ROLE_ADMIN")) {
