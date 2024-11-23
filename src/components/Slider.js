@@ -1,49 +1,63 @@
-import { useCallback, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import api from "../provider/api";
-import useEmblaCarousel from "embla-carousel-react";
-import Autoplay from "embla-carousel-autoplay";
-export default function Slider(){
 
-    const[slideItems,setSlideItems] = useState([]);
-    const[loading,setLoading] = useState(true);
+import { Navigation, Pagination, Scrollbar, Autoplay } from 'swiper/modules';
+import { Swiper, SwiperSlide } from 'swiper/react';
+import 'swiper/css';
 
-    const autoplayOptions = { delay: 4000 }; // 4-second delay
-    const [emblaRef, emblaApi] = useEmblaCarousel({ loop: true }, [Autoplay(autoplayOptions)]);
+export default function Slider() {
 
-    const onSelect = useCallback(() => {
-        if (!emblaApi) return;
-        const selectedIndex = emblaApi.selectedScrollSnap();
-        console.log(`Current slide: ${selectedIndex}`);
-      }, [emblaApi]);
+  const [slideItems, setSlideItems] = useState([]);
+  const [loading, setLoading] = useState(true);
 
-      useEffect(() => {
-        if (!emblaApi) return;
-        emblaApi.on("select", onSelect);
-      }, [emblaApi, onSelect]);
-
-    const fetchSlides = async()=>{
-
-       try{
-
-        const resp =  await api.get("/api/admin/slider/getsliders");
-        setSlideItems(resp);
-        setLoading(false);
-       }catch(ex){
-
-        setLoading(false);
-       }
-    
-       
+  // Fetch slides from API
+  const fetchSlides = async () => {
+    try {
+      const resp = await api.get("/api/admin/slider/getsliders");
+      console.log(resp);
+      // Assuming your response data contains an array of slides
+      setSlideItems(resp.data); // Adjust based on the actual response structure
+      setLoading(false);
+    } catch (ex) {
+      setLoading(false);
+      console.error('Error fetching slides:', ex);
     }
-    
-    useEffect(() => {
-        fetchSlides();
-      },[]);
+  }
 
+  useEffect(() => {
+    fetchSlides();
+  }, []);
 
-      return(<>
-     {!slideItems &&<p>Hey</p>}
-      </>);
+  if (loading) {
+    return <div>Loading...</div>; // Show loading state while slides are fetching
+  }
 
+  return (
+    <div className="swiper-container">
+      <Swiper
+        spaceBetween={50}
+        slidesPerView={1}
+        loop={true}
+        autoplay={{
+          delay: 3000,
+          disableOnInteraction: false,
+        }}
+        modules={[Autoplay]}
+        className="mySwiper"
+        style={{ width: "80%", height: "400px", marginTop:"5px"}}
+      >
+        {slideItems.length > 0 ? (
+          slideItems.map((slide, index) => (
+            <SwiperSlide key={index}>
+              <img src={slide.sliderImagePath} alt={`Slide ${index + 1}`}  style={{height:"400px",width:"80%"}}/>
+            </SwiperSlide>
+          ))
+        ) : (
+          <SwiperSlide>
+            <div>No slides available</div>
+          </SwiperSlide>
+        )}
+      </Swiper>
+    </div>
+  );
 }
-
