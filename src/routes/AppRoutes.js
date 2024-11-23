@@ -17,6 +17,7 @@ import ProtectedRoute from "./ProtectedRoutes";
 import Register from "../components/Auth/Register";
 import OAuth2Handler from "../components/Auth/OAuth2Handler";
 import NewSlide from "../components/NewSlide";
+import AddCategory from "../components/AddCategory";
 const AppRoutes =() =>{
   const stripePromise = loadStripe(process.env.REACT_APP_STRIPE_PUBLIC_KEY);
     return(
@@ -27,7 +28,8 @@ const AppRoutes =() =>{
             <Routes>
                 <Route path="/login" element={<Login/>}/>
                 <Route path="/signup" element={<Register/>}/>
-                <Route path="/admin" element={<ProtectedRoute adminPage={true}><ProductManagement/></ProtectedRoute>}/>
+                <Route path="/admin" element={<ProductManagement/>}/>
+                <Route path="/newcategory" element={<AddCategory/>}/>
                 <Route
           path="/products"
           element={

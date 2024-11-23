@@ -1,120 +1,161 @@
 import axios from "axios";
 import { useState } from "react";
-import { Form } from "react-bootstrap";
+import { Button, Card, Form } from "react-bootstrap";
+import { useForm } from "react-hook-form";
+import InputField from "../utils/InputField";
+import apiWithUpload from "../../provider/apiWithUpload";
 
 export default function ProductManagement() {
 
-    const [product, setProduct] = useState({
+    const[expiring,setExpiring] = useState(false);
+
+const{register,
+    handleSubmit,
+    formState:{errors}
+} = useForm({
+    defaultValues:{
+
         productName: "Example Product",
         manufacturer: "Example Manufacturer",
         imageFile: null, // This will be a file upload path, adjust as needed
         manufactureDate: new Date().toISOString().slice(0, 10),  // Format date to 'yyyy-MM-dd'
         expiryDate: new Date().toISOString().slice(0, 10),  // Format date to 'yyyy-MM-dd'
-        doesExpire: true,
+        doesExpire: expiring,
         quantity: 10,
         price: 100,
         minQuantity: 2,
-        categoryId:1
-    });
-
+        categoryId:2,
     
+    },
+    mode:"onTouched",
+});
 
-    // Function to handle input changes and update the product state
-    function buildBody(event) {
-        const { name, value } = event.target;
-        setProduct(prevProduct => ({
-            ...prevProduct,
-            [name]: value
-        }));
-    }
 
-    function handleFileChange(event) {
-        setProduct(prevProduct => ({
-            ...prevProduct,
-            imageFile: event.target.files[0] // Store the selected file object
-        }));
-    }
+/**
+ * 
+ * String productName;
+    String manufacturer;
+    String imagePath;
+    Date manufactureDate;
+    Date expiryDate;
+    Boolean doesExpire;
+    int quantity;
+    int price;
+    int minQuantity;
+    int ratings;
+    int totalRates;
+    categoryId
+ */
 
-    // Function to handle form submission and send data to the backend
-    function doSend(event) {
-        event.preventDefault();
-        /**
-         * @RequestParam("productName") String productName,
-            @RequestParam("manufacturer") String manufacturer,
-            @RequestParam("manufactureDate") Date manufactureDate,
-            @RequestParam("expiryDate") Date expiryDate,
-            @RequestParam("doesExpire") Boolean doesExpire,
-            @RequestParam("quantity") int quantity,
-            @RequestParam("price") int price,
-            @RequestParam("minQuantity") int minQuantity,
-            @RequestParam("categoryId") Long categoryId,
-            @RequestParam("imageFile") MultipartFile imageFile)
-         * 
-         */
-        const formData = new FormData();
-        formData.append('productName',product.productName);
-        formData.append('manufacturer',product.manufacturer);
-        formData.append('manufactureDate',product.manufactureDate);
-        formData.append('expiryDate',product.expiryDate);
-        formData.append('doesExpire',product.doesExpire);
-        formData.append('price',product.price);
-        formData.append('minQuantity',product.minQuantity);
-        formData.append('quantity',product.quantity);
-        formData.append('categoryId',product.categoryId);
-        if(product.imageFile){
-            formData.append('imageFile',product.imageFile);
-        }
+function handleCheckChange(){
+    setExpiring(!expiring);
+    
+}
 
-       
-        axios.post('http://localhost:8080/api/admin/addproduct', formData, {
-            headers: {
-                'Content-Type': 'multipart/form-data',
-            }
-        })
-        .then(resp => console.log("Response:", resp.data))
-        .catch(err => console.error("Error:", err));
-    }
+const saveProduct=(data)=>{
 
-    return (
-        <div className="form-group">
-            <Form>
-                <label>Product Name:</label>
-                <input type="text" name="productName" id="productName" onChange={buildBody} />
+    const formData = new FormData();
+        formData.append("productName",data.productName);
+        formData.append("manufacturer",data.manufacturer);
+        formData.append("manufactureDate",data.manufactureDate);
+        formData.append("expiryDate",data.expiryDate);
+        formData.append("doesExpire",expiring);
+        formData.append("imageFile",data.imageFile[0]);
+        formData.append("categoryId",data.categoryId);
+        formData.append("quantity",data.quantity);
+        formData.append("price",data.price)
+        formData.append("minQuantity",data.minQuantity)
+       // console.log(formData);
 
-                <label>Manufacturer:</label>
-                <input type="text" name="manufacturer" id="manufacturer" onChange={buildBody} />
+       try{
 
-                <label>Manufacture Date:</label>
-                <input type="date" name="manufactureDate" id="manufactureDate" onChange={buildBody} />
+        const response = apiWithUpload.post("/api/admin/addproduct",formData);
+       }catch(ex){
 
-                <label>Expiry Date:</label>
-                <input type="date" name="expiryDate" id="expiryDate" onChange={buildBody} />
+        console.log(ex);
+       }
+}
 
-                <label>Does Expire:</label>
-                <input type="checkbox" name="doesExpire" id="doesExpire" 
-                    checked={product.doesExpire} 
-                    onChange={e => setProduct({ ...product, doesExpire: e.target.checked })} 
-                />
+return(
+    <div className="d-flex align-items-center justify-content-center min-vh-100" >
 
-                <label>Quantity:</label>
-                <input type="number" name="quantity" id="quantity" onChange={buildBody} />
+        <Card style={{width:"400px"}}> 
+            <Card.Header>Add A product</Card.Header>
+            <Card.Body>
+            <form onSubmit={handleSubmit(saveProduct)}>
 
-                <label>Price:</label>
-                <input type="number" name="price" id="price" onChange={buildBody} />
+            <InputField
+            label="Category"
+            type="text"
+            id="categoryId"
+            register={register}
+            errors={errors}
+            required="*Productname is required is required"
+            />         
+            <InputField
+            label="Product Name"
+            type="text"
+            id="productName"
+            register={register}
+            errors={errors}
+            required="*Productname is required is required"
+            />
+            <InputField
+            label="Manufacturer"
+            type="text"
+            id="manufacturer"
+            register={register}
+            errors={errors}
+            required="*Productname is required is required"
+            />
+            <InputField
+            label="Manufacture Date"
+            type="text"
+            id="manufactureDate"
+            register={register}
+            errors={errors}
+            required="*Productname is required is required"
+            />
+            <InputField
+            label="Expiry  Date"
+            type="text"
+            id="expiryDate"
+            register={register}
+            errors={errors}
+            required="*Productname is required is required"
+            />
+           <input type="checkbox" id="doesExpire" checked={expiring} onChange={handleCheckChange}/>
+            <InputField
+            label="Quantity"
+            type="number"
+            id="quantity"
+            register={register}
+            errors={errors}
+            required="*Productname is required is required"
+            />
+            
+            <InputField
+            label="Price"
+            type="text"
+            id="price"
+            register={register}
+            errors={errors}
+            required="*Productname is required is required"
+            />
+             <InputField
+            label="Product Image"
+            type="file"
+            id="imageFile"
+            register={register}
+            errors={errors}
+            required="*Image is required is required"
+            />
+            <Button variant="primary" type="submit" >Submit</Button>
+            </form>
+            </Card.Body>
+        </Card>
 
-                <label>Minimum Quantity:</label>
-                <input type="number" name="minQuantity" id="minQuantity" onChange={buildBody} />
+    </div>
+);
 
-                <label>Category ID:</label>
-                <input type="number" name="categoryId" id="categoryId" 
-                    onChange={buildBody} 
-                />
-
-                <label>Image:</label>
-                <input type="file" name="imageFile" id="imageFile" onChange={handleFileChange} />
-
-                <button onClick={doSend}>Submit</button>
-            </Form>
-        </div>
-    );
 }

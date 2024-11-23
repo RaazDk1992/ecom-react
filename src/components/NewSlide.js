@@ -24,9 +24,6 @@ const NewSlide = ()=>{
         formData.append("title",data.slideTitle);
         formData.append("imageFile",data.image[0]);
 
-       if(data.image){
-        console.log("data");
-       }
        try{
         const response = await  apiWithUpload.post("/api/admin/slider/newslide",formData);
         console.log(response);
