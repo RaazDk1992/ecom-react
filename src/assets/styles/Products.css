@@ -20,7 +20,14 @@
     visibility: hidden;
 
 }
-.product_items_wrapper .product_card:hover #add_to_cart_button{
+
+#explore_more_label{
+    position:fixed;
+    left: 5px;
+    top: 69%;
+    z-index: 100;
+}
+.product_items_wrapper .product_card:hover  #add_to_cart_button{
     visibility: visible;
     bottom: 2px;
 }

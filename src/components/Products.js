@@ -14,6 +14,8 @@ export default function Products(){
   const [items, setItems] = useState([]); // To store the API response data
   const [loading, setLoading] = useState(true); // To handle loading state
   const [error, setError] = useState(null); // To handle error state
+  const [isHovered, setIsHovered] = useState(false);
+
 
   useEffect(() => {
     // Replace with your actual API endpoint
@@ -58,11 +60,14 @@ export default function Products(){
     );
   }
 
+  const mouseHover =()=>{
+    setIsHovered(true);
+  }
   return (<>
 
 <Slider/>
 
-<div className="d-flex ">
+<div className="d-flex " id="explore_more_label">
     <span style={{color:'red',fontFamily:'Ostrich-Sans',fontSize:'30px',paddingLeft:'10px'}}>Browse </span>&nbsp;&nbsp;<span style={{color:'red',fontFamily:'Amar-nath',fontSize:'30px'}}> More</span>
 </div>
 <Container className="mt-5">
@@ -73,7 +78,7 @@ export default function Products(){
             <div className="product_items_wrapper">
 
 
-            <Card>
+            <Card key={item.id} onMouseEnter={mouseHover} className="product_card">
                 <Card.Img variant="top" src={item.imagePath} className="product_card_image"/>
                 <Card.Body>
                     <Card.Title>{item.productName}</Card.Title>
@@ -82,9 +87,10 @@ export default function Products(){
                     <span>Rs.</span><span>{item.price}</span>
                 </Card.Body>
                 
+                
             </Card>
 
-            <Button id="add_to_cart_button" >Addto Cart</Button>
+            <Button id="add_to_cart_button"  >Addto Cart</Button>
             </div>
 
 

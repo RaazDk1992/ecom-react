@@ -6,8 +6,8 @@
     width: 100px;            /* Adjust size based on your needs */
     height: 100px;
     position: fixed;
-    right: 1%;
-    top: 70%;
+    left: 10ppx;
+    top: 61%;
 }
 
 .ecom-cart-icon {
