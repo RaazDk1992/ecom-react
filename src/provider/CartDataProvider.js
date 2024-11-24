@@ -1,25 +1,42 @@
-import { createContext, useState } from "react";
+import { createContext, useEffect, useState } from "react";
+import { json } from "react-router-dom";
 
 // Create the CartContext
 export const CartContext = createContext();
 
 export const CartDataProvider = ({ children }) => {
-  // Use useState to manage cart items
-  const [cartItems, setCartItems] = useState([]);
+  
+  const [cart, setCart] = useState(() => {
+    const storedCart = localStorage.getItem("cartx");
+    return storedCart ? JSON.parse(storedCart) : [];
+  });
 
-  // Function to add items to the cart
-  const addToCart = (product) => {
-    setCartItems((prevItems) => {
-      const updatedCart = [...prevItems, product];
-      console.log("Updated Cart Items:", updatedCart); // Logs the correct updated cart
-      return updatedCart;
-    });
-  };
+  
 
-  // Return the context provider with cartItems and addToCart available
+  useEffect(()=>{
+
+      localStorage.setItem("cartx",JSON.stringify(cart))
+    
+  },[cart]);
+
+  const addToCart =(item)=>{
+    setCart(
+      (prevCart)=>{
+        const updatedCart = [...prevCart,item];
+        return updatedCart;
+      }
+    );};
+
+    const removeFromCart = (itemId)=>{
+      setCart((prevcart)=>{
+        const updatedCart = prevcart.filter((item)=>item.id !==itemId)
+        return updatedCart;
+      });
+    }
+
   return (
-    <CartContext.Provider value={{ cartItems, addToCart }}>
-      {children}  {/* Render the children inside the provider */}
+<CartContext.Provider value={{ cart, addToCart, removeFromCart }}>
+        {children}  {/* Render the children inside the provider */}
     </CartContext.Provider>
   );
 };

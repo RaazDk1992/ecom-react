@@ -1,5 +1,4 @@
 import { useCallback, useContext, useEffect, useState } from "react";
-import FetchData from "../provider/FetchData";
 import { Alert, Button, Card, Col, Container, Row, Spinner } from "react-bootstrap";
 import './../assets/styles/Products.css';
 import Ratings from "./Ratings";
@@ -8,14 +7,14 @@ import {useNavigate } from "react-router-dom";
 import Slider from "./Slider";
 import api from "../provider/api";
 import './../assets/styles/fonts.css'
+import { CartContext } from "../provider/CartDataProvider";
 
 export default function Products(){
 
   const [items, setItems] = useState([]); // To store the API response data
   const [loading, setLoading] = useState(true); // To handle loading state
   const [error, setError] = useState(null); // To handle error state
-  const [isHovered, setIsHovered] = useState(false);
-
+  const { cart, addToCart, removeFromCart } = useContext(CartContext);
 
   useEffect(() => {
     // Replace with your actual API endpoint
@@ -60,9 +59,8 @@ export default function Products(){
     );
   }
 
-  const mouseHover =()=>{
-    setIsHovered(true);
-  }
+ 
+
   return (<>
 
 <Slider/>
@@ -78,7 +76,7 @@ export default function Products(){
             <div className="product_items_wrapper">
 
 
-            <Card key={item.id} onMouseEnter={mouseHover} className="product_card">
+            <Card key={item.id}  className="product_card">
                 <Card.Img variant="top" src={item.imagePath} className="product_card_image"/>
                 <Card.Body>
                     <Card.Title>{item.productName}</Card.Title>
@@ -88,7 +86,7 @@ export default function Products(){
                 </Card.Body>
                 
                 
-                <Button id="add_to_cart_button"  >Addto Cart</Button>
+                <Button key={`btn_`+item.id} id="add_to_cart_button"  onClick={()=>addToCart(item)}>Addto Cart</Button>
             </Card>
 
            
