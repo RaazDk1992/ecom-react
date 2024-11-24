@@ -88,9 +88,10 @@ export default function Products(){
                 </Card.Body>
                 
                 
+                <Button id="add_to_cart_button"  >Addto Cart</Button>
             </Card>
 
-            <Button id="add_to_cart_button"  >Addto Cart</Button>
+           
             </div>
 
 
