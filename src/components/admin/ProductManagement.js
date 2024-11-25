@@ -1,13 +1,19 @@
 import axios from "axios";
-import { useState } from "react";
-import { Button, Card, Form } from "react-bootstrap";
+import { useEffect, useState } from "react";
+import { Alert, Button, Card, Col, Form, Row, Spinner } from "react-bootstrap";
 import { useForm } from "react-hook-form";
 import InputField from "../utils/InputField";
 import apiWithUpload from "../../provider/apiWithUpload";
+import api from "../../provider/api";
 
 export default function ProductManagement() {
 
     const[expiring,setExpiring] = useState(false);
+    const[selectedUnit,setSelectedUnit] = useState();
+    const[category,setCategory] = useState();
+    const[unitx,setUnitx] = useState([]);
+    const[loading,setLoading] = useState(true);
+    const[error,setError] = useState();
 
 const{register,
     handleSubmit,
@@ -21,10 +27,11 @@ const{register,
         manufactureDate: new Date().toISOString().slice(0, 10),  // Format date to 'yyyy-MM-dd'
         expiryDate: new Date().toISOString().slice(0, 10),  // Format date to 'yyyy-MM-dd'
         doesExpire: expiring,
-        quantity: 10,
+        quantity: 1,
         price: 100,
         minQuantity: 2,
         categoryId:2,
+        itemsInStock:1,
     
     },
     mode:"onTouched",
@@ -45,12 +52,32 @@ const{register,
     int ratings;
     int totalRates;
     categoryId
+
+
+    itemsInStock
+
  */
 
 function handleCheckChange(){
     setExpiring(!expiring);
     
 }
+
+useEffect(()=>{
+    api.get("/api/units/getunits")
+    .then((response)=>{
+        if(Array.isArray(response.data) && response.data.length >0){
+            setUnitx(response.data);
+            setLoading(false);
+        }
+        
+           
+    })
+    .catch((error)=>{
+        setError(error);
+        setLoading(false);
+    })
+},[]);
 
 const saveProduct=(data)=>{
 
@@ -63,8 +90,10 @@ const saveProduct=(data)=>{
         formData.append("imageFile",data.imageFile[0]);
         formData.append("categoryId",data.categoryId);
         formData.append("quantity",data.quantity);
-        formData.append("price",data.price)
-        formData.append("minQuantity",data.minQuantity)
+        formData.append("price",data.price);
+        formData.append("minQuantity",data.minQuantity);
+        formData.append("unit_id",selectedUnit);
+        formData.append("itemsInStock",data.itemsInStock);
        // console.log(formData);
 
        try{
@@ -72,86 +101,213 @@ const saveProduct=(data)=>{
         const response = apiWithUpload.post("/api/admin/addproduct",formData);
        }catch(ex){
 
-        console.log(ex);
+        setError(ex)
        }
 }
+
+if (loading) {
+    return (
+      <div className="text-center mt-5">
+        <Spinner animation="border" variant="primary" />
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="text-center mt-5">
+        <Alert variant="danger">{error}</Alert>
+      </div>
+    );
+  }
+
+  if (unitx.length === 0) {
+    return (
+      <div className="text-center mt-5">
+        <Alert variant="warning">No items available.</Alert>
+      </div>
+    );
+  }
+
+  const handleUnitChange=(e)=>{
+    setSelectedUnit(e.target.value);
+    //console.log(selectedUnit);
+  }
 
 return(
     <div className="d-flex align-items-center justify-content-center min-vh-100" >
 
-        <Card style={{width:"400px"}}> 
+        <Card style={{width:"600px"}}> 
             <Card.Header>Add A product</Card.Header>
             <Card.Body>
-            <form onSubmit={handleSubmit(saveProduct)}>
+            <Form onSubmit={handleSubmit(saveProduct)} className="product-form">
+            <Row className="mb-3">
+                <Col md={6}>
+                    <Form.Group controlId="categoryId">
+                        <Form.Label>Category</Form.Label>
+                        <Form.Control
+                            type="text"
+                            {...register("categoryId", { required: "*Category is required" })}
+                            isInvalid={!!errors.categoryId}
+                        />
+                        <Form.Control.Feedback type="invalid">
+                            {errors.categoryId?.message}
+                        </Form.Control.Feedback>
+                    </Form.Group>
+                </Col>
 
-            <InputField
-            label="Category"
-            type="text"
-            id="categoryId"
-            register={register}
-            errors={errors}
-            required="*Productname is required is required"
-            />         
-            <InputField
-            label="Product Name"
-            type="text"
-            id="productName"
-            register={register}
-            errors={errors}
-            required="*Productname is required is required"
-            />
-            <InputField
-            label="Manufacturer"
-            type="text"
-            id="manufacturer"
-            register={register}
-            errors={errors}
-            required="*Productname is required is required"
-            />
-            <InputField
-            label="Manufacture Date"
-            type="text"
-            id="manufactureDate"
-            register={register}
-            errors={errors}
-            required="*Productname is required is required"
-            />
-            <InputField
-            label="Expiry  Date"
-            type="text"
-            id="expiryDate"
-            register={register}
-            errors={errors}
-            required="*Productname is required is required"
-            />
-           <input type="checkbox" id="doesExpire" checked={expiring} onChange={handleCheckChange}/>
-            <InputField
-            label="Quantity"
-            type="number"
-            id="quantity"
-            register={register}
-            errors={errors}
-            required="*Productname is required is required"
-            />
-            
-            <InputField
-            label="Price"
-            type="text"
-            id="price"
-            register={register}
-            errors={errors}
-            required="*Productname is required is required"
-            />
-             <InputField
-            label="Product Image"
-            type="file"
-            id="imageFile"
-            register={register}
-            errors={errors}
-            required="*Image is required is required"
-            />
-            <Button variant="primary" type="submit" >Submit</Button>
-            </form>
+                <Col md={6}>
+                    <Form.Group controlId="productName">
+                        <Form.Label>Product Name</Form.Label>
+                        <Form.Control
+                            type="text"
+                            {...register("productName", { required: "*Product Name is required" })}
+                            isInvalid={!!errors.productName}
+                        />
+                        <Form.Control.Feedback type="invalid">
+                            {errors.productName?.message}
+                        </Form.Control.Feedback>
+                    </Form.Group>
+                </Col>
+            </Row>
+
+            <Row className="mb-3">
+                <Col md={6}>
+                    <Form.Group controlId="manufacturer">
+                        <Form.Label>Manufacturer</Form.Label>
+                        <Form.Control
+                            type="text"
+                            {...register("manufacturer", { required: "*Manufacturer is required" })}
+                            isInvalid={!!errors.manufacturer}
+                        />
+                        <Form.Control.Feedback type="invalid">
+                            {errors.manufacturer?.message}
+                        </Form.Control.Feedback>
+                    </Form.Group>
+                </Col>
+
+                <Col md={6}>
+                    <Form.Group controlId="manufactureDate">
+                        <Form.Label>Manufacture Date</Form.Label>
+                        <Form.Control
+                            type="date"
+                            {...register("manufactureDate", { required: "*Manufacture Date is required" })}
+                            isInvalid={!!errors.manufactureDate}
+                        />
+                        <Form.Control.Feedback type="invalid">
+                            {errors.manufactureDate?.message}
+                        </Form.Control.Feedback>
+                    </Form.Group>
+                </Col>
+            </Row>
+
+            <Row className="mb-3">
+                <Col md={6}>
+                    <Form.Group controlId="expiryDate">
+                        <Form.Label>Expiry Date</Form.Label>
+                        <Form.Control
+                            type="date"
+                            {...register("expiryDate", { required: "*Expiry Date is required" })}
+                            isInvalid={!!errors.expiryDate}
+                        />
+                        <Form.Control.Feedback type="invalid">
+                            {errors.expiryDate?.message}
+                        </Form.Control.Feedback>
+                    </Form.Group>
+                </Col>
+
+                <Col md={6} className="d-flex align-items-center">
+                    <Form.Check
+                        type="checkbox"
+                        id="doesExpire"
+                        label="Does Expire?"
+                        checked={expiring}
+                        onChange={handleCheckChange}
+                    />
+                </Col>
+            </Row>
+
+            <Row className="mb-3">
+                <Col md={6}>
+                    <Form.Group controlId="quantity">
+                        <Form.Label>Min Order Quantity</Form.Label>
+                        <Form.Control
+                            type="number"
+                            {...register("quantity", { required: "*Quantity is required" })}
+                            isInvalid={!!errors.quantity}
+                        />
+                        <Form.Control.Feedback type="invalid">
+                            {errors.quantity?.message}
+                        </Form.Control.Feedback>
+                    </Form.Group>
+                </Col>
+
+                <Col md={6}>
+                    <Form.Group controlId="units">
+                        <Form.Label>unit</Form.Label>
+                        <Form.Select aria-label="Units" value={selectedUnit} onChange={handleUnitChange}>
+                            <option>Open this select menu</option>
+                            
+                                {unitx.map((unit)=>(<option key={`item_`+unit.id} value={unit.id}>{unit.unitName}</option>))}
+                        </Form.Select>
+                    </Form.Group>
+                </Col>
+            </Row>
+
+            <Row className="mb-3">
+            <Col md={6}>
+                    <Form.Group controlId="price">
+                        <Form.Label>Price for Min Quantity</Form.Label>
+                        <Form.Control
+                            type="text"
+                            {...register("price", { required: "*Price is required" })}
+                            isInvalid={!!errors.price}
+                        />
+                        <Form.Control.Feedback type="invalid">
+                            {errors.price?.message}
+                        </Form.Control.Feedback>
+                    </Form.Group>
+                </Col>
+                <Col md={6}>
+                <Form.Group controlId="items_in_stock">
+                        <Form.Label>Quantity in Stock</Form.Label>
+                        <Form.Control
+                            type="text"
+                            {...register("itemsInStock", { required: "*stock quantity is required" })}
+                            isInvalid={!!errors.itemsInStock}
+                        />
+                        <Form.Control.Feedback type="invalid">
+                            {errors.itemsInStock?.message}
+                        </Form.Control.Feedback>
+                    </Form.Group>
+                </Col>
+            </Row>
+
+            <Row className="mb-3">
+            <Col md={12}>
+                    <Form.Group controlId="imageFile">
+                        <Form.Label>Product Image</Form.Label>
+                        <Form.Control
+                            type="file"
+                            {...register("imageFile", { required: "*Image is required" })}
+                            isInvalid={!!errors.imageFile}
+                        />
+                        <Form.Control.Feedback type="invalid">
+                            {errors.imageFile?.message}
+                        </Form.Control.Feedback>
+                    </Form.Group>
+                </Col>
+             
+            </Row>
+
+            <Row>
+                <Col className="text-center">
+                    <Button variant="primary" type="submit">
+                        Submit
+                    </Button>
+                </Col>
+            </Row>
+        </Form>
             </Card.Body>
         </Card>
 

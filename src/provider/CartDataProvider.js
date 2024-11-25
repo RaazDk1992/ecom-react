@@ -7,37 +7,41 @@ export const CartContext = createContext();
 export const CartDataProvider = ({ children }) => {
   
   const [cart, setCart] = useState(() => {
-    const storedCart = localStorage.getItem("cartx");
+    const storedCart = localStorage.getItem("excom");
     return storedCart ? JSON.parse(storedCart) : [];
   });
 
-  
 
-  useEffect(()=>{
+     // Save cart to localStorage whenever it updates
+     useEffect(() => {
+      localStorage.setItem("excom", JSON.stringify(cart));
+  }, [cart]);
 
-      localStorage.setItem("cartx",JSON.stringify(cart))
-    
-  },[cart]);
+  // Add an item to the cart
+  const addToCart = (item) => {
 
-  const addToCart =(item)=>{
-    setCart(
-      (prevCart)=>{
-        const updatedCart = [...prevCart,item];
-        return updatedCart;
-      }
-    );};
+       setCart((prevCart)=>{
+        const existingItem = prevCart.find((cartItem)=>(cartItem.productId===item.productId));
 
-    const removeFromCart = (itemId)=>{
-      setCart((prevcart)=>{
-        const updatedCart = prevcart.filter((item)=>item.id !==itemId)
-        return updatedCart;
-      });
-    }
+        if(existingItem){
+            return prevCart.map((cartItem)=>
+                cartItem.productId ===item.productId?{...cartItem,quantity:cartItem.quantity+1}:
+            cartItem)
+        } else {
+            return [...prevCart,item];
+        }
+       });
 
-  return (
-<CartContext.Provider value={{ cart, addToCart, removeFromCart }}>
-        {children}  {/* Render the children inside the provider */}
-    </CartContext.Provider>
-  );
 };
 
+  // Remove an item from the cart
+  const removeFromCart = (itemId) => {
+      setCart((prevCart) => prevCart.filter((item) => item.id !== itemId));
+  };
+
+  return (
+      <CartContext.Provider value={{ cart, addToCart, removeFromCart }}>
+          {children}
+      </CartContext.Provider>
+  );
+};
