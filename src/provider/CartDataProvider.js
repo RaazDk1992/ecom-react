@@ -34,13 +34,22 @@ export const CartDataProvider = ({ children }) => {
 
 };
 
+const updateCart=(productId, qty) =>{
+
+    setCart((prevCart)=>  {
+        return prevCart.map((cartItem)=>(cartItem.productId===productId?{...cartItem,quantity:qty}:cartItem));
+    });
+
+};
+
   // Remove an item from the cart
   const removeFromCart = (itemId) => {
-      setCart((prevCart) => prevCart.filter((item) => item.id !== itemId));
+      console.log(itemId)
+      setCart((prevCart) => prevCart.filter((item) => item.productId !== itemId));
   };
 
   return (
-      <CartContext.Provider value={{ cart, addToCart, removeFromCart }}>
+      <CartContext.Provider value={{ cart, addToCart,updateCart, removeFromCart }}>
           {children}
       </CartContext.Provider>
   );
